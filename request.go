@@ -1,12 +1,13 @@
 package pintoto
 
 import (
+	"context"
 	"go.dtapp.net/gorequest"
 	"time"
 )
 
 // 请求
-func (c *Client) request(url string, params map[string]interface{}) (gorequest.Response, error) {
+func (c *Client) request(ctx context.Context, url string, params map[string]interface{}) (gorequest.Response, error) {
 
 	// 公共参数
 	params["time"] = time.Now().Unix()
@@ -35,7 +36,7 @@ func (c *Client) request(url string, params map[string]interface{}) (gorequest.R
 
 	// 日志
 	if c.config.PgsqlDb != nil {
-		go c.log.GormMiddleware(request)
+		go c.log.GormMiddleware(ctx, request, Version)
 	}
 	if c.config.MongoDb != nil {
 		go c.log.MongoMiddleware(request)
