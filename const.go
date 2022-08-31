@@ -1,11 +1,7 @@
 package pintoto
 
 const (
-	apiUrl = "https://movieapi2.pintoto.cn"
-)
-
-const (
+	apiUrl   = "https://movieapi2.pintoto.cn"
 	logTable = "pintoto"
+	Version  = "1.0.5"
 )
-
-const Version = "1.0.4"
