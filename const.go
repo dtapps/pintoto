@@ -6,5 +6,4 @@ const (
 
 const (
 	LogTable = "pintoto"
-	Version  = "1.0.10"
 )

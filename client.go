@@ -2,7 +2,6 @@ package pintoto
 
 import (
 	"go.dtapp.net/golog"
-	"go.dtapp.net/gorequest"
 	"math"
 	"strconv"
 )
@@ -15,14 +14,13 @@ type ClientConfig struct {
 
 // Client 实例
 type Client struct {
-	requestClient *gorequest.App // 请求服务
-	config        struct {
+	config struct {
 		appKey    string
 		appSecret string
 	}
-	log struct {
-		status bool             // 状态
-		client *golog.ApiClient // 日志服务
+	gormLog struct {
+		status bool           // 状态
+		client *golog.ApiGorm // 日志服务
 	}
 }
 
@@ -33,8 +31,6 @@ func NewClient(config *ClientConfig) (*Client, error) {
 
 	c.config.appKey = config.AppKey
 	c.config.appSecret = config.AppSecret
-
-	c.requestClient = gorequest.NewHttp()
 
 	return c, nil
 }

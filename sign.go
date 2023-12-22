@@ -2,14 +2,14 @@ package pintoto
 
 import (
 	"crypto/md5"
-	"encoding/json"
 	"fmt"
+	"go.dtapp.net/gorequest"
+	"go.dtapp.net/gostring"
 	"net/url"
 	"sort"
-	"strconv"
 )
 
-func (c *Client) getSign(appSecret string, p map[string]interface{}) string {
+func (c *Client) getSign(appSecret string, p gorequest.Params) string {
 	var keys []string
 	for k := range p {
 		keys = append(keys, k)
@@ -17,7 +17,7 @@ func (c *Client) getSign(appSecret string, p map[string]interface{}) string {
 	sort.Strings(keys)
 	signStr := ""
 	for _, key := range keys {
-		signStr += fmt.Sprintf("%s=%s&", key, c.getString(p[key]))
+		signStr += fmt.Sprintf("%s=%s&", key, gostring.GetString(p.Get(key)))
 	}
 	signStr += fmt.Sprintf("appSecret=%s", appSecret)
 	// md5加密
@@ -26,27 +26,13 @@ func (c *Client) getSign(appSecret string, p map[string]interface{}) string {
 	return fmt.Sprintf("%x", has)
 }
 
-func (c *Client) getString(i interface{}) string {
-	switch v := i.(type) {
-	case string:
-		return v
-	case int:
-		return strconv.Itoa(v)
-	case bool:
-		return strconv.FormatBool(v)
-	default:
-		bytes, _ := json.Marshal(v)
-		return string(bytes)
-	}
-}
-
 // 获取请求数据
-func (c *Client) getRequestData(params map[string]interface{}) string {
+func (c *Client) getRequestData(param gorequest.Params) string {
 	// 公共参数
 	args := url.Values{}
 	// 请求参数
-	for key, val := range params {
-		args.Set(key, c.getString(val))
+	for key, val := range param {
+		args.Set(key, gostring.GetString(val))
 	}
 	return args.Encode()
 }
