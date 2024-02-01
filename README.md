@@ -1,5 +1,5 @@
 <h1>
-<a href="https://www.dtapp.net/">Golang pintoto</a>
+<a href="https://www.dtapp.net/">Golang</a>
 </h1>
 
 📦 Golang pintoto
@@ -13,5 +13,5 @@
 #### 安装
 
 ```shell
-go get -v -u go.dtapp.net/pintoto@v1.0.11
+go get -v -u go.dtapp.net/pintoto@v1.0.12
 ```
